@@ -59,5 +59,5 @@ while not board.solved():
                 board.eliminate_big_square(square.x, square.y)
         print()
     board.print()
-
+print("Finished!!!")
 board.print()

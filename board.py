@@ -64,18 +64,31 @@ class Board:
     
     # only works with 3x3 now. change 
     def print(self):
+        print()
+        big_sq_horiz_border = 1
         for board_row in self.board:
             for square_row in range(3):
+                big_sq_vert_border=1
                 for s in board_row:
-                    for i in range(1):
-                        for j in s.get_row((square_row)):
-                            if isinstance(j, str):
-                                if s.filled:
-                                    print(end=" . ")
-                                else:
-                                    print(end="   ")
+                    
+                    for count, j in enumerate(s.get_row((square_row))):
+                        if isinstance(j, str):
+                            if s.filled:
+                                print(end=" . ")
                             else:
-                                print ("{:2d}".format(j), end=" ")
-                        print(end=" | ")
+                                print(end="   ")
+                        else:
+                            print ("{:2d}".format(j), end=" ")
+                    if big_sq_vert_border % 3 == 0:
+                        print(" @ ", end="")
+                    else:
+                        print(" | ", end="")
+                    big_sq_vert_border = big_sq_vert_border + 1 # make every 3rd vertical line thick
+                    
+                    
                 print()
-            print("------------------------------------------------------------------------------------------------------------")
+            if big_sq_horiz_border % 3 == 0:    
+                print("@ "*54)
+            else:
+                print("-"*108)
+            big_sq_horiz_border = big_sq_horiz_border + 1
