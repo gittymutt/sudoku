@@ -47,7 +47,7 @@ for tries in range(100):
     
     if board.solved():
         break
-    board.print()
+    # board.print()
 
 
 board.print()

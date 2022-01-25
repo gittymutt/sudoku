@@ -4,7 +4,9 @@ from math import floor
 class Board:
     def __init__(self, x=9, y=9):
         self.board = [[ Square(i, j) for j in range (y)] for i in range (x)]
-    
+        self.board_height = x
+        self.board_width = y
+
     def eliminate_columns(self, x, y):
         if self.board[x][y].filled == 0:
             print("Can't eliminate. ", x, ", ", y, " is not filled. Continuing...")
@@ -84,6 +86,29 @@ class Board:
                     #print(num_to_check, " not unique in this row or already filled")
                     pass
 
+            # check unique numbers in each column and fill if found
+            for row in range(9):
+                count = 0
+                square = None
+                is_filled = False
+                for col in range(9):
+                    # print (col,row, self.board[col][row].numbers_left )
+                    numbers_left = self.board[col][row].numbers_left
+                    filled = self.board[col][row].filled
+                    square_temp = self.board[col][row]
+                    if filled == num_to_check: # if the number already filled in, go to next row
+                        is_filled = True
+                        break
+                    if num_to_check in numbers_left:
+                        count = count + 1
+                        square = square_temp # remember the square
+                if count == 1 and not is_filled:
+                    square.filled = num_to_check # fill in unique number
+                    square.numbers_left = [num_to_check] # set numbers left to unique number
+                    print("Found ", num_to_check, " unique in col ", col, " filling in." )
+                else:
+                    #print(num_to_check, " not unique in this row or already filled")
+                    pass
 
     def set_number(self, x, y, num):
         self.board[x][y].fill(num)
@@ -139,3 +164,33 @@ class Board:
             else:
                 print("-"*108)
             big_sq_horiz_border = big_sq_horiz_border + 1
+
+    def print_coords(self):
+        for row in self.board:
+            for col in row:
+                print(col.x, col.y, " ", end="")
+            print()
+
+    def get_row(self, row_num):
+        if row_num > self.board_width or row_num < 0:
+            raise Exception("Row number out of range.")
+        row = self.board[row_num]
+        return row
+
+    def get_col(self, col_num):
+        col = []
+        for y in range(self.board_height):
+            col.append(self.get_square(y, col_num))
+        return col
+
+    def get_block(self, x, y):
+        block = []
+        top_x_corner = floor(x/3)*3
+        top_y_corner = floor(y/3)*3
+        for x in range(3):
+            for y in range(3):
+                block.append(self.board[top_x_corner + x][top_y_corner + y])
+        return block
+
+    def get_square(self, x, y):
+        return self.board[x][y]
