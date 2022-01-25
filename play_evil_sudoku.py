@@ -28,6 +28,10 @@ board.set_number(6, 7, 5)
 board.set_number(0, 8, 7)
 board.set_number(5, 8, 5)
 
+
+print("Original Board")
+board.print()
+
 for tries in range(100):
     # eliminate non-sole candidates
     for board_row in board.board:
@@ -44,6 +48,9 @@ for tries in range(100):
     if board.solved():
         break
     board.print()
+
+
+board.print()
 if board.solved():
     print("Solved it!")
 else:

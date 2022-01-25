@@ -39,11 +39,12 @@ class Board:
     def fill_unique(self):
         # If a row, column or box has a unique number, fill it
 
-        # check unique numbers in boxes and fill if found 
-        top_x_corner = range(0, 9, 3)
+         
+        top_x_corner = range(0, 9, 3)  # top left corners of the blocks
         top_y_corner = range(0, 9, 3)
 
         for num_to_check in range(1,10):
+            # check unique numbers in boxes and fill if found
             for box_x in top_x_corner:
                 for box_y in top_y_corner:
                     count = 0
@@ -56,21 +57,47 @@ class Board:
                                 count = count + 1
                                 square = self.board[box_x + x][box_y + y]
                     if count == 1 and square.filled == 0:
-                        print("Has a unique number: ", num_to_check, " Filling square.")
+                        print("unique number in block", box_x, box_y, ": ", num_to_check, ", Filling square.")
                         square.filled = num_to_check
                         square.numbers_left=[num_to_check] # remove other numbers
+            # check unique numbers in each row and fill if found
+            for col in range(9):
+                count = 0
+                square = None
+                is_filled = False
+                for row in range(9):
+                    #print (col,row, self.board[col][row].numbers_left )
+                    numbers_left = self.board[col][row].numbers_left
+                    filled = self.board[col][row].filled
+                    square_temp = self.board[col][row]
+                    if filled == num_to_check: # if the number already filled in, go to next row
+                        is_filled = True
+                        break
+                    if num_to_check in numbers_left:
+                        count = count + 1
+                        square = square_temp # remember the square
+                if count == 1 and not is_filled:
+                    square.filled = num_to_check # fill in unique number
+                    square.numbers_left = [num_to_check] # set numbers left to unique number
+                    print("Found ", num_to_check, " unique in row ", row, " filling in." )
+                else:
+                    #print(num_to_check, " not unique in this row or already filled")
+                    pass
 
 
     def set_number(self, x, y, num):
         self.board[x][y].fill(num)
      
     def solved(self):
-        solved = True
+        all_filled = True
         for board_row in self.board:
             for square in board_row:
-                if not square.filled:
-                    solved = False
-        return solved
+                if square.filled == 0:
+                    all_filled = False
+        if all_filled:
+            top_x_corner = range(0, 9, 3)  # top left corners of the blocks
+            top_y_corner = range(0, 9, 3)
+
     
     def has_single_possibilities(self):
         possibilities = False
