@@ -7,7 +7,7 @@ board = Board()
 
 board.set_number(0, 0, 1)
 board.set_number(5, 0, 6)
-board.set_number(6, 0, 7)
+board.set_number(6, 0, 3)
 
 board.set_number(1, 1, 3)
 board.set_number(4, 1, 1)
@@ -39,6 +39,7 @@ board.set_number(1, 8, 8)
 board.set_number(4, 8, 2)
 board.set_number(7, 8, 7)
 
+print("Original Board")
 board.print()
 for tries in range(100):
     # eliminate non-sole candidates

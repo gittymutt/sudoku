@@ -94,9 +94,14 @@ class Board:
             for square in board_row:
                 if square.filled == 0:
                     all_filled = False
+        # To do: check that each block, row, and column has 1-9
         if all_filled:
-            top_x_corner = range(0, 9, 3)  # top left corners of the blocks
-            top_y_corner = range(0, 9, 3)
+            # top_x_corner = range(0, 9, 3)  # top left corners of the blocks
+            # top_y_corner = range(0, 9, 3)
+            return True
+        else:
+            return False
+
 
     
     def has_single_possibilities(self):
