@@ -28,7 +28,8 @@ board.set_number(6, 7, 5)
 board.set_number(0, 8, 7)
 board.set_number(5, 8, 5)
 
-while board.has_single_possibilities and not board.solved():
+for tries in range(100):
+    # eliminate non-sole candidates
     for board_row in board.board:
         for square in board_row:
             if square.filled:
@@ -36,6 +37,16 @@ while board.has_single_possibilities and not board.solved():
                 board.eliminate_columns(square.x, square.y)
                 board.eliminate_rows(square.x, square.y)
                 board.eliminate_big_square(square.x, square.y)
-        print()
-
+                
+    # Fill in unique candidates
+    board.fill_unique()
+    
+    if board.solved():
+        break
     board.print()
+if board.solved():
+    print("Solved it!")
+else:
+    print("I'm stumped!!")
+
+

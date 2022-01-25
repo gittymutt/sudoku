@@ -1,4 +1,5 @@
 from board import Board
+from time import perf_counter
 
 # try to solve a real sudoku (38 filled) Easy level from sudoku.com
 
@@ -46,6 +47,10 @@ board.set_number(2, 8, 1)
 board.set_number(4, 8, 5)
 board.set_number(8, 8, 3)
 
+
+board.print()
+start_time = perf_counter()
+
 turns = 0
 while not board.solved():
     turns = turns+1
@@ -57,7 +62,12 @@ while not board.solved():
                 board.eliminate_columns(square.x, square.y)
                 board.eliminate_rows(square.x, square.y)
                 board.eliminate_big_square(square.x, square.y)
-        print()
-    board.print()
+        # print()
+    # board.print()
 print("Finished!!!")
+
+
+end_time = perf_counter()
+total_time = end_time-start_time
+print("Done in ", total_time, " seconds.")
 board.print()
